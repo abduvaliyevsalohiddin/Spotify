@@ -11,6 +11,19 @@ class QoshiqchilarAPi(APIView):
         serializer = QoshiqchiSerializer(qoshiqchilar, many=True)
         return Response(serializer.data)
 
+    def post(self, request):
+        qoshiqchi = request.data
+        serializer = QoshiqchiSerializer(data=qoshiqchi)
+        if serializer.is_valid():
+            data = serializer.validated_data
+            Qoshiqchi.objects.create(
+                ism=data.get("ism"),
+                tugulgan_yil=data.get("tugulgan_yil"),
+                davlat=data.get("davlat"),
+            )
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
 
 class QoshiqlarAPi(APIView):
     def get(self, request):
