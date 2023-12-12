@@ -6,4 +6,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('qoshiqlar/', QoshiqlarAPi.as_view()),
     path('qoshiqchilar/', QoshiqchilarAPi.as_view()),
+    path('qoshiqchi/<int:pk>/', QoshiqchiAPi.as_view()),
 ]
