@@ -66,3 +66,8 @@ class QoshiqlarAPi(APIView):
 class AlbomModelViewSet(ModelViewSet):
     queryset = Albom.objects.all()
     serializer_class = AlbomSerializer
+
+
+class QoshiqchiModelViewSet(ModelViewSet):
+    queryset = Qoshiqchi.objects.all()
+    serializer_class = QoshiqchiSerializer

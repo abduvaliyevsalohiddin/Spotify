@@ -5,11 +5,10 @@ from rest_framework.exceptions import ValidationError
 from .models import *
 
 
-class QoshiqchiSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    ism = serializers.CharField()
-    tugulgan_yil = serializers.DateField()
-    davlat = serializers.CharField()
+class QoshiqchiSerializer(ModelSerializer):
+    class Meta:
+        model = Qoshiqchi
+        fields = '__all__'
 
 
 class AlbomSerializer(ModelSerializer):
