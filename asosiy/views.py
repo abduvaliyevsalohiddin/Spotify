@@ -1,5 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
 from .models import *
 from .serializers import *
@@ -60,3 +61,8 @@ class QoshiqlarAPi(APIView):
         qoshiqlar = Qoshiq.objects.all()
         serializer = QoshiqSerializer(qoshiqlar, many=True)
         return Response(serializer.data)
+
+
+class AlbomModelViewSet(ModelViewSet):
+    queryset = Albom.objects.all()
+    serializer_class = AlbomSerializer
