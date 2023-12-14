@@ -1,3 +1,4 @@
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -71,3 +72,10 @@ class AlbomModelViewSet(ModelViewSet):
 class QoshiqchiModelViewSet(ModelViewSet):
     queryset = Qoshiqchi.objects.all()
     serializer_class = QoshiqchiSerializer
+
+    @action(detail=True)
+    def albom(self, request, pk):
+        qoshiqchi = self.get_object()
+        qoshiqchi_albom = qoshiqchi.albom_set.all()
+        serializer = AlbomSerializer(qoshiqchi_albom, many=True)
+        return Response(serializer.data)
