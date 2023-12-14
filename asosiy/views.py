@@ -86,3 +86,8 @@ class QoshiqchiModelViewSet(ModelViewSet):
         qoshiqchi_albom = qoshiqchi.albom_set.all()
         serializer = AlbomSerializer(qoshiqchi_albom, many=True)
         return Response(serializer.data)
+
+
+class QoshiqModelViewSet(ModelViewSet):
+    queryset = Qoshiq.objects.all()
+    serializer_class = QoshiqSerializer
