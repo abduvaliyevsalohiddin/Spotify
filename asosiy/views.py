@@ -68,6 +68,13 @@ class AlbomModelViewSet(ModelViewSet):
     queryset = Albom.objects.all()
     serializer_class = AlbomSerializer
 
+    @action(detail=True)
+    def qoshiq(self, request, pk):
+        albom = self.get_object()
+        albom_qoshiq = albom.qoshiq_set.all()
+        serializer = QoshiqSerializer(albom_qoshiq, many=True)
+        return Response(serializer.data)
+
 
 class QoshiqchiModelViewSet(ModelViewSet):
     queryset = Qoshiqchi.objects.all()
