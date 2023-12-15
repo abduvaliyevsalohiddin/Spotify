@@ -98,3 +98,6 @@ class QoshiqchiModelViewSet(ModelViewSet):
 class QoshiqModelViewSet(ModelViewSet):
     queryset = Qoshiq.objects.all()
     serializer_class = QoshiqSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['id', 'nom', 'janr']  # /?search = ....
+    ordering_fields = ['davomiylik']  # /?ordering= ....
