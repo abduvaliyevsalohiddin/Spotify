@@ -23,11 +23,12 @@ class QoshiqSerializer(ModelSerializer):
         fields = '__all__'
 
     def validate_fayl(self, qiymat):
-        if qiymat.url.endswith('.mp3'):
+        qiymat = str(qiymat)
+        if qiymat.endswith('.mp3'):
             return qiymat
         raise ValidationError("Fayl .mp3 emas")
 
     def validate_davomiylik(self, qiymat):
-        if qiymat > "00:07:00":
+        if str(qiymat) > "0:07:00":
             raise ValidationError("Qoshiq davomiyligi 00:07:00  dan oshib ketdi !!!")
         return qiymat
