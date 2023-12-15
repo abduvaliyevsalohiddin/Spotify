@@ -1,5 +1,6 @@
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
@@ -79,6 +80,9 @@ class AlbomModelViewSet(ModelViewSet):
 class QoshiqchiModelViewSet(ModelViewSet):
     queryset = Qoshiqchi.objects.all()
     serializer_class = QoshiqchiSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['id', 'ism', 'davlat']  # /?search = ....
+    ordering_fields = ['tugulgan_yil']  # /?ordering= ....
 
     @action(detail=True)
     def albom(self, request, pk):
