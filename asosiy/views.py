@@ -68,6 +68,9 @@ class QoshiqlarAPi(APIView):
 class AlbomModelViewSet(ModelViewSet):
     queryset = Albom.objects.all()
     serializer_class = AlbomSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['id', 'nom']  # /?search = ....
+    ordering_fields = ['sana']  # /?ordering= ....
 
     @action(detail=True)
     def qoshiq(self, request, pk):
