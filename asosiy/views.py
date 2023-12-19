@@ -3,7 +3,8 @@ from rest_framework.response import Response
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-
+from django.contrib.postgres.search import TrigramSimilarity
+from rest_framework.pagination import PageNumberPagination
 from .models import *
 from .serializers import *
 
@@ -86,6 +87,17 @@ class QoshiqchiModelViewSet(ModelViewSet):
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['id', 'ism', 'davlat']  # /?search = ....
     ordering_fields = ['tugulgan_yil']  # /?ordering= ....
+    pagination_class = PageNumberPagination
+    pagination_class.page_size = 3
+
+    def get_queryset(self):
+        qoshiqchilar = self.queryset
+        qidiruv = self.request.query_params.get("qidiruv")  # /?qidiruv
+        if qidiruv:
+            qoshiqchilar = Qoshiqchi.objects.annotate(
+                oxshashlik=TrigramSimilarity("ism", qidiruv)
+            ).filter(oxshashlik__gt=0.5).order_by("-oxshashlik")
+        return qoshiqchilar
 
     @action(detail=True)
     def albom(self, request, pk):
@@ -101,3 +113,5 @@ class QoshiqModelViewSet(ModelViewSet):
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['id', 'nom', 'janr']  # /?search = ....
     ordering_fields = ['davomiylik']  # /?ordering= ....
+    pagination_class = PageNumberPagination
+    pagination_class.page_size = 2
