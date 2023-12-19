@@ -113,8 +113,8 @@ class QoshiqModelViewSet(ModelViewSet):
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['id', 'nom', 'janr']  # /?search = ....
     ordering_fields = ['davomiylik']  # /?ordering= ....
-    # pagination_class = PageNumberPagination
-    # pagination_class.page_size = 2
+    pagination_class = PageNumberPagination
+    pagination_class.page_size = 2
 
     def get_queryset(self):
         qoshiqlar = self.queryset
