@@ -113,5 +113,14 @@ class QoshiqModelViewSet(ModelViewSet):
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['id', 'nom', 'janr']  # /?search = ....
     ordering_fields = ['davomiylik']  # /?ordering= ....
-    pagination_class = PageNumberPagination
-    pagination_class.page_size = 2
+    # pagination_class = PageNumberPagination
+    # pagination_class.page_size = 2
+
+    def get_queryset(self):
+        qoshiqlar = self.queryset
+        qidiruv = self.request.query_params.get("qidiruv")  # /?qidiruv
+        if qidiruv:
+            qoshiqlar = Qoshiq.objects.annotate(
+                oxshashlik=TrigramSimilarity("nom", qidiruv)
+            ).filter(oxshashlik__gt=0.5).order_by("-oxshashlik")
+        return qoshiqlar
