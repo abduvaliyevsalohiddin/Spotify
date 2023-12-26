@@ -124,3 +124,4 @@ class QoshiqModelViewSet(ModelViewSet):
                 oxshashlik=TrigramSimilarity("nom", qidiruv)
             ).filter(oxshashlik__gt=0.5).order_by("-oxshashlik")
         return qoshiqlar
+
